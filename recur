@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# v0.0.1
+
+action=$1
+shift
+
+[ "$action" = "usage" ] && {
+  echo ""
+  echo "  Add tasks from recurring.txt"
+  echo "    recur"
+  echo ""
+  exit
+}
+[ "$action" = "recur" ] && {
+    python "$TODO_ACTIONS_DIR"/recur.py
+}

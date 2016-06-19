@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# v0.0.1
+
+action=$1
+shift
+
+[ "$action" = "usage" ] && {
+  echo ""
+  echo "  Show a list of tasks for the upcoming 7 days:"
+  echo "    week"
+  echo ""
+  exit
+}
+[ "$action" = "week" ] && {
+    $TODO_FULL_SH ls | python $TODO_ACTIONS_DIR/week.py
+}
