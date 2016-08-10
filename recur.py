@@ -39,4 +39,4 @@ for line in f:
         tt.add_task(task, date.today(), False)
 
 f.close()
-print(str(datetime.now()) + " todo.txt recurring task operations completed.")
+print("[{:%c}] todo.txt recurring task operations completed.".format(datetime.now()))

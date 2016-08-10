@@ -26,7 +26,7 @@ def task_exists(needle):
 
 def add_task(task, due_date = None, duplicate = True):
     if due_date is not None:
-        task = "due:{:%Y-%m-%d} {:}".format(due_date, task)    
+        task = "{:} due:{:%Y-%m-%d}".format(task, due_date)
     if not duplicate and task_exists(task):
         print(task)
         print("Task already exists. Nothing added.")
