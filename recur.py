@@ -28,15 +28,15 @@ for line in f:
     rcmd = lps[0].lower().strip()
     task = lps[1].strip()
     if rcmd == "daily":
-        tt.add_task(task, date.today(), False)
+        tt.add_task(task, date.today(), False, True)
     elif "day" in rcmd and rcmd[4:] == date.today().strftime("%d").lower():
-        tt.add_task(task, date.today(), False)
+        tt.add_task(task, date.today(), False, True)
     elif "month" in rcmd:
         parts = rcmd[6:].split(' ')
         if add_months(datetime.strptime(parts[1],'%Y-%m-%d').date(), int(parts[0])) == date.today():
-            tt.add_task(task, date.today(), False)
+            tt.add_task(task, date.today(), False, True)
     elif rcmd in days and rcmd == date.today().strftime("%A").lower():
-        tt.add_task(task, date.today(), False)
+        tt.add_task(task, date.today(), False, True)
 
 f.close()
 print("[{:%c}] todo.txt recurring task operations completed.".format(datetime.now()))

@@ -16,18 +16,21 @@ def get_task(task_no):
             del parts[0]
             return " ".join(parts)
 
-def task_exists(needle):
+def task_exists(needle, checkDone = False):
     cmd = "{:} ls".format(TODO_SH)
     lines = subprocess.check_output(cmd, shell=True).split('\n')
+    if checkDone:
+        cmd = "{:} lf done.txt".format(TODO_SH)
+        lines = lines + subprocess.check_output(cmd, shell=True).split('\n')
     for l in lines:
         if needle in l:
             return True
     return False
 
-def add_task(task, due_date = None, duplicate = True):
+def add_task(task, due_date = None, duplicate = True, checkDuplicateDone = False):
     if due_date is not None:
         task = "{:} due:{:%Y-%m-%d}".format(task, due_date)
-    if not duplicate and task_exists(task):
+    if not duplicate and task_exists(task, checkDuplicateDone):
         print(task)
         print("Task already exists. Nothing added.")
         return
