@@ -1,3 +1,5 @@
+#! /usr/bin/python
+
 from datetime import datetime
 
 def get_due_date(line):

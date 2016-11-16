@@ -1,3 +1,5 @@
+#! /usr/bin/python
+
 import sys
 from datetime import date
 from pytodo import duedate as dd

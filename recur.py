@@ -1,7 +1,11 @@
+#! /usr/bin/python
 import os, os.path
 import subprocess
+import sys
 from datetime import date, datetime
+from dateutil.relativedelta import relativedelta
 from pytodo import task as tt
+from pytodo import duedate as dd
 
 RECUR_TXT = os.environ['TODO_DIR'] + "/recurring.txt"
 
@@ -15,9 +19,16 @@ if not os.path.isfile(RECUR_TXT):
     print("File recurring.txt not found at {:}/\nExiting...".format(os.environ['TODO_DIR']))
     exit()
 
+old_task = sys.argv[1]
+tdate = dd.get_due_date(old_task)
+old_date = tdate if tdate is not None else date.today()
+if old_date < date.today():
+    old_date = date.today()
+old_task = ' '.join(dd.remove_due_date(old_task).split(' ')[1:])
+
 f = open(RECUR_TXT, 'r')
 for line in f:
-    if line[0] == "#":
+    if line[0] == "#" or line.strip() == "":
         continue
 
     lps = line.split(":")
@@ -27,16 +38,34 @@ for line in f:
 
     rcmd = lps[0].lower().strip()
     task = lps[1].strip()
+
+    if task != old_task:
+        continue
+
+    print("Task was found in the recurring list, adding it again...")
+
     if rcmd == "daily":
-        tt.add_task(task, date.today(), False, True)
-    elif "day" in rcmd and rcmd[4:] == date.today().strftime("%d").lower():
-        tt.add_task(task, date.today(), False, True)
-    elif "month" in rcmd:
-        parts = rcmd[6:].split(' ')
-        if add_months(datetime.strptime(parts[1],'%Y-%m-%d').date(), int(parts[0])) == date.today():
-            tt.add_task(task, date.today(), False, True)
-    elif rcmd in days and rcmd == date.today().strftime("%A").lower():
-        tt.add_task(task, date.today(), False, True)
+        next_date = old_date + relativedelta(days = +1)
+    elif rcmd[0:3] == "day":
+        next_date = old_date.replace(day = int(rcmd[4:]))
+        if next_date <= old_date:
+            next_date = next_date + relativedelta(months = +1)
+    elif rcmd[0:6] == "months":
+        months = int(rcmd.split(' ')[1])
+        start = datetime.strptime(rcmd.split(' ')[2],'%Y-%m-%d').date()
+        next_date = start
+        while(next_date <= date.today()):
+            next_date = next_date + relativedelta(months = +months)
+    elif rcmd in days:
+        weekday = days.index(rcmd)
+        days_ahead = weekday - date.today().weekday()
+        if days_ahead <= 0:
+            days_ahead += 7
+        next_date = old_date + relativedelta(days = +days_ahead)
+        if next_date == date.today():
+            next_date = next_date + relativedelta(weeks = +1)
+
+    tt.add_task(task, next_date, False, True)
 
 f.close()
 print("[{:%c}] todo.txt recurring task operations completed.".format(datetime.now()))
