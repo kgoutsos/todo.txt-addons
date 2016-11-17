@@ -26,6 +26,7 @@ if old_date < date.today():
     old_date = date.today()
 old_task = ' '.join(dd.remove_due_date(old_task).split(' ')[1:])
 
+flag = False
 f = open(RECUR_TXT, 'r')
 for line in f:
     if line[0] == "#" or line.strip() == "":
@@ -42,6 +43,7 @@ for line in f:
     if task != old_task:
         continue
 
+    flag = True
     print("Task was found in the recurring list, adding it again...")
 
     if rcmd == "daily":
@@ -68,4 +70,5 @@ for line in f:
     tt.add_task(task, next_date, False, True)
 
 f.close()
-print("[{:%c}] todo.txt recurring task operations completed.".format(datetime.now()))
+if flag:
+    print("[{:%c}] todo.txt recurring task operations completed.".format(datetime.now()))
