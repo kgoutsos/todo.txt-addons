@@ -9,7 +9,7 @@ def get_due_date(line):
     parts = line.strip().split(' ')
     for p in parts:
         if p[0:4] == "due:":
-            due = datetime.strptime(p.split(':')[1],"%Y-%m-%d").date()
+            due = datetime.strptime(p[4:14],"%Y-%m-%d").date()
             break
     return due
 
