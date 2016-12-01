@@ -32,7 +32,7 @@ for line in f:
     if line[0] == "#" or line.strip() == "":
         continue
 
-    lps = line.split(":")
+    lps = line.split(": ")
     if len(lps) != 2:
         print("Failed parsing " + line)
         continue
