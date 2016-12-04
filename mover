@@ -13,5 +13,5 @@ shift
   exit
 }
 [ "$action" = "mover" ] && {
-    $TODO_FULL_SH ls | python $TODO_ACTIONS_DIR/mover.py
+    $TODO_FULL_SH -p ls | python $TODO_ACTIONS_DIR/mover.py
 }
