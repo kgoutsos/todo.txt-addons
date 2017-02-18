@@ -8,13 +8,20 @@ import subprocess
 from pytodo import duedate as dd
 from pytodo import task as tt
 
-if len(sys.argv) != 3:
+def printArgumentError():
     print("Invalid rescheduling arguments.")
     print("Usage: todo.sh res TASK_NUMBER NEW_DATE")
     exit()
 
-task_no = sys.argv[1]
-new_date_arg = sys.argv[2].lower()
+try:
+	task_no = int(sys.argv[1])
+	new_date_arg = sys.argv[2].lower()
+except:
+	printArgumentError()
+
+if len(sys.argv) != 3 or new_date_arg == "":
+	printArgumentError()
+
 task = tt.get_task(task_no)
 task_date = dd.get_due_date(task)
 
