@@ -3,7 +3,7 @@
 from datetime import datetime
 
 def get_due_date(line):
-    if "due:" not in line:
+    if line is None or "due:" not in line:
         return None
     due = None
     parts = line.strip().split(' ')
@@ -14,6 +14,8 @@ def get_due_date(line):
     return due
 
 def set_due_date(line, new_date):
+    if line is None:
+        return None
     if "due:" in line:
         parts = line.strip().split(' ')
         for i in range(0,len(parts)):

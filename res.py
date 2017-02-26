@@ -23,6 +23,9 @@ if len(sys.argv) != 3 or new_date_arg == "":
 	printArgumentError()
 
 task = tt.get_task(task_no)
+if task is None:
+    print("Task with number %i not found. Exiting..." % task_no)
+    exit()
 task_date = dd.get_due_date(task)
 
 if new_date_arg == "none":

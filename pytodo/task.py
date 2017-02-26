@@ -11,7 +11,7 @@ def get_task(task_no):
     task = None
     for l in lines:
         parts = l.split(' ')
-        if len(parts) < 2:
+        if len(parts) < 2 or not parts[0].isdigit():
             continue
         if int(parts[0]) == int(task_no):
             del parts[0]
