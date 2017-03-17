@@ -44,7 +44,7 @@ for line in f:
         continue
 
     flag = True
-    print("Task was found in the recurring list, adding it again...")
+    print("Task was found in the recurring tasks list, adding it again...")
 
     if rcmd == "daily":
         next_date = old_date + relativedelta(days = +1)
@@ -52,6 +52,12 @@ for line in f:
         next_date = old_date.replace(day = int(rcmd[4:]))
         if next_date <= old_date:
             next_date = next_date + relativedelta(months = +1)
+    elif rcmd[0:5] == "weeks":
+        weeks = int(rcmd.split(' ')[1])
+        start = datetime.strptime(rcmd.split(' ')[2],'%Y-%m-%d').date()
+        next_date = start
+        while(next_date <= date.today()):
+            next_date = next_date + relativedelta(weeks = +weeks)
     elif rcmd[0:6] == "months":
         months = int(rcmd.split(' ')[1])
         start = datetime.strptime(rcmd.split(' ')[2],'%Y-%m-%d').date()
