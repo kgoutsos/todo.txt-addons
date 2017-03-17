@@ -16,5 +16,5 @@ shift
   exit
 }
 [ "$action" = "res" ] && {
-    python $TODO_ACTIONS_DIR/res.py $no "$new_date"
+    python $TODO_ACTIONS_DIR/res/res.py $no "$new_date"
 }

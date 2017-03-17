@@ -13,6 +13,4 @@ fi
 
 "$TODO_SH" command "$@"
 
-[ $? -eq 0 ] && [ -z "$3" ] && "$TODO_SH" note __rmfromtext "DDDD$todo"
-
 python "$TODO_ACTIONS_DIR"/recur.py "$TASK"

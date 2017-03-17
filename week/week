@@ -13,5 +13,5 @@ shift
   exit
 }
 [ "$action" = "week" ] && {
-    $TODO_FULL_SH ls | python $TODO_ACTIONS_DIR/week.py
+    $TODO_FULL_SH ls | python $TODO_ACTIONS_DIR/week/week.py
 }
