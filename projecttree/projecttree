@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# v0.0.1
+
+action=$1
+term=$2
+shift
+
+[ "$action" = "usage" ] && {
+  echo ""
+  echo "  Print a project and its subprojects in a tree format:"
+  echo "    projecttree TERM"
+  echo "      prints a project tree optionally filtered by TERM"
+  exit
+}
+[ "$action" = "projecttree" ] && {
+    $TODO_FULL_SH ls $term | python $TODO_ACTIONS_DIR/projecttree/projecttree.py
+}
