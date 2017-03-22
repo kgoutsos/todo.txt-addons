@@ -9,7 +9,7 @@ week_list = {}
 
 for line in sys.stdin:
     due = dd.get_due_date(line)
-    if due is None or due >= today + timedelta(days=7):
+    if due is None or due < today or due >= today + timedelta(days=7):
         continue
     days = (due - today).days
     if days not in week_list:
